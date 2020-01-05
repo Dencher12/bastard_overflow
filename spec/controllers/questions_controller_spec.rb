@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-  let(:question) { FactoryBot.create(:question) }
+  let(:question) { create(:question) }
 
   describe 'GET #index' do
-    let(:questions) { FactoryBot.create_list(:question, 2) }
+    let(:questions) { create_list(:question, 2) }
 
     before do
       get :index
@@ -54,6 +54,34 @@ RSpec.describe QuestionsController, type: :controller do
 
     it 'renders edit view' do
       expect(response).to render_template :edit
+    end
+  end
+
+  describe 'POST #create' do
+    context 'valid' do
+      let(:attr) { attributes_for(:question) }
+
+      it 'saves new question in the db' do
+        expect { post :create, params: { question: attr } }.to change(Question, :count).by(1) 
+      end
+
+      it 'redirects to show view' do
+        post :create, params: { question: attr }
+        expect(response).to redirect_to question_path(assigns(:question))
+      end
+    end
+
+    context 'invalid' do
+      let(:attr) { attributes_for(:invalid_question) }
+
+      it 'does not save new question in the db' do
+        expect { post :create, params: { question: attr } }.to_not change(Question, :count)
+      end
+
+      it 'renders the edit view' do
+        post :create, params: { question: attr }
+        expect(response).to render_template :edit
+      end
     end
   end
 end
