@@ -1,11 +1,16 @@
 h1 Вопрос
 div 
   strong Название: 
-  == @question.title
+  = @question.title
 div 
   div
     strong Вопрос: 
-  div style="max-width:300px" == @question.body
+  div style="max-width:300px" = @question.body
   br
+
+h3 Ответы
+- @question.answers.each do |a|
+  p = a.body
+
 div
-  == link_to 'Ответть на вопрос', ''
+  = link_to 'Ответить на вопрос', new_question_answer_path(@question)

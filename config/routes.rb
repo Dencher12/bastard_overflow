@@ -3,5 +3,7 @@ Rails.application.routes.draw do
   get 'welcome/index'
   root 'welcome#index'
 
-  resources :questions
+  resources :questions do
+    resources :answers
+  end
 end
