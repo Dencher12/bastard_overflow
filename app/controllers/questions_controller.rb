@@ -1,5 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :set_question, only: %i[show edit]
+  before_action :authenticate_user!, except: %i[index show]
 
   def index
     @questions = Question.all
