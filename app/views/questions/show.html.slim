@@ -7,6 +7,10 @@ div
     strong Question: 
   div style="max-width:300px" = @question.body
   br
+  
+  - if @question.user == current_user
+    = link_to 'Delete Question', question_path(@question), method: :delete
+    
 
 h3 Answers
 - @question.answers.each do |a|

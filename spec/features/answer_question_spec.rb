@@ -10,6 +10,11 @@ feature 'Answer question', %q{
 
   scenario 'Signed in user tries to answer question' do
     log_in(user)
+
+    question = build(:question)
+    question.user = user
+    question.save
+
     visit question_path(question)
 
     fill_in 'Your Answer', with: 'Ultimate Answer'
@@ -17,14 +22,5 @@ feature 'Answer question', %q{
 
     expect(current_path).to eq question_path(question)
     expect(page).to have_content 'Ultimate Answer'
-  end
-
-  scenario 'Non-signed in user tries to answer question' do
-    visit question_path(question)
-
-    fill_in 'Your Answer', with: 'Ultimate Answer'
-    click_on 'Answer'
-
-    expect(current_path).to eq new_user_session_path
   end
 end

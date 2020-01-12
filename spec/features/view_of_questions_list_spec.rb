@@ -6,6 +6,7 @@ feature 'View of questions list', %q{
   I want to be able to view of questions list
 } do
   scenario 'User tries to view of questions list' do
+    visit root_path
     click_on 'List of bastard questions'
     expect(current_path).to eq questions_path
   end
