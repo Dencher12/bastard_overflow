@@ -1,4 +1,5 @@
 class AnswersController < ApplicationController
+  before_action :authenticate_user!, except: %i[index show]
   before_action :set_answer, only: %i[show edit]
   before_action :set_question, only: %i[create new]
 
@@ -18,9 +19,7 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params)
 
     if @answer.save
-      redirect_to question_answer_path(@question, @answer)
-    else
-      render :edit
+      redirect_to question_path(@answer.question)
     end
   end
 
