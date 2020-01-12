@@ -1,10 +1,10 @@
-h1 Вопрос
+h1 Question
 div 
-  strong Название: 
+  strong Title: 
   = @question.title
 div 
   div
-    strong Вопрос: 
+    strong Question: 
   div style="max-width:300px" = @question.body
   br
 
@@ -13,4 +13,4 @@ h3 Ответы
   p = a.body
 
 div
-  = link_to 'Ответить на вопрос', new_question_answer_path(@question)
+  = link_to 'Answer question', new_question_answer_path(@question)
