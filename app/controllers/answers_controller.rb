@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :set_answer, only: %i[show edit]
-  before_action :set_question, only: %i[create new]
+  before_action :set_answer, only: %i[show edit destroy]
+  before_action :set_question, only: %i[create new destroy]
 
   def index
     @answers = Answer.all
@@ -20,6 +20,13 @@ class AnswersController < ApplicationController
     @answer.user = current_user
     @answer.save
     redirect_to question_path(@question)
+  end
+
+  def destroy
+    if @answer.user == current_user
+      @answer.destroy
+      redirect_to question_path(@question)
+    end
   end
 
   private

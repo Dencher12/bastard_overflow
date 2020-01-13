@@ -6,7 +6,6 @@ feature 'Answer question', %q{
   I want to be able to answer question
 } do
   given(:user) { create(:user) }
-  given(:question) { create(:question) }
 
   scenario 'Signed in user tries to answer question' do
     log_in(user)

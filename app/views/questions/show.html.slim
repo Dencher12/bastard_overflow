@@ -13,7 +13,17 @@ div
     
 
 h3 Answers
-- @question.answers.each do |a|
-  p = a.body
+table border = "1" rules="all"
+  thead
+    tr
+      th Answer
+      th colspan="3" Actions
+
+  tbody
+    - @question.answers.each do |a|
+      tr
+        td = a.body
+        - if a.user == current_user
+          td = link_to 'Delete Answer', question_answer_path(@question, a), method: :delete
 
 = render 'answer_form', answer: @answer
