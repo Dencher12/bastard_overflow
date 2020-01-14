@@ -7,14 +7,15 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
     @answer.save
-    redirect_to question_path(@question)
+    render :update
   end
 
   def destroy
     if @answer.user == current_user
       @answer.destroy
-      redirect_to question_path(@question)
     end
+
+    render :update
   end
 
   private
