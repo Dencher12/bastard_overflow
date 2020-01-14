@@ -11,7 +11,7 @@ feature 'Delete question' do
   end
 
   scenario 'Owner tries to delete question' do
-    log_in(user)
+    sign_in(user)
 
     visit question_path(question)
     click_on 'Delete Question'
@@ -20,7 +20,7 @@ feature 'Delete question' do
   end
 
   scenario 'Non-owner tries to delete question' do
-    log_in(user2)
+    sign_in(user2)
 
     visit question_path(question)
 

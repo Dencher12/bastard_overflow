@@ -1,19 +1,7 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, except: %i[index show]
-  before_action :set_answer, only: %i[show edit destroy]
-  before_action :set_question, only: %i[create new destroy]
-
-  def index
-    @answers = Answer.all
-  end
-
-  def show; end
-
-  def new
-    @answer = Answer.new
-  end
-
-  def edit; end
+  before_action :authenticate_user!
+  before_action :set_answer, only: %i[destroy]
+  before_action :set_question, only: %i[create destroy]
 
   def create
     @answer = @question.answers.new(answer_params)

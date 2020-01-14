@@ -8,7 +8,7 @@ feature 'Question creation', %q{
   given(:user) { create(:user) }
 
   scenario 'Signed in user tries to create question' do
-    log_in(user)
+    sign_in(user)
 
     click_on 'Ask bastard question'
     fill_in 'Title', with: '?'

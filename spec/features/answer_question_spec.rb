@@ -8,12 +8,9 @@ feature 'Answer question', %q{
   given(:user) { create(:user) }
 
   scenario 'Signed in user tries to answer question' do
-    log_in(user)
+    sign_in(user)
 
-    question = build(:question)
-    question.user = user
-    question.save
-
+    question = create(:question, user: user)
     visit question_path(question)
 
     fill_in 'Your Answer', with: 'Ultimate Answer'

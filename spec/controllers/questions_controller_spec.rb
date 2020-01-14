@@ -1,10 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-  let(:question) { create(:question) }
+  let(:user) { create(:user) }
+  let(:question) { create(:question, user: user) }
 
   describe 'GET #index' do
-    let(:questions) { create_list(:question, 2) }
+    let(:questions) { create_list(:question, 2, user: user) }
 
     before do
       get :index
@@ -34,6 +35,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #new' do
+    sign_in
     before { get :new }
 
     it 'creates question and assigns to a variable' do
@@ -46,6 +48,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #edit' do
+    sign_in
+
     before { get :edit, params: {id: question.id} }
 
     it 'finds question by id and assigns to a variable' do
@@ -58,6 +62,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'POST #create' do
+    sign_in
+
     context 'valid' do
       let(:attr) { attributes_for(:question) }
 
