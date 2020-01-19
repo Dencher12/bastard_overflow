@@ -1,27 +1,20 @@
 class AnswersController < ApplicationController
-  before_action :set_answer, only: %i[show edit]
-  before_action :set_question, only: %i[create new]
-
-  def index
-    @answers = Answer.all
-  end
-
-  def show; end
-
-  def new
-    @answer = Answer.new
-  end
-
-  def edit; end
+  before_action :authenticate_user!
+  before_action :set_answer, only: %i[destroy]
+  before_action :set_question, only: %i[create destroy]
 
   def create
     @answer = @question.answers.new(answer_params)
+    @answer.user = current_user
+    @answer.save
+  end
 
-    if @answer.save
-      redirect_to question_answer_path(@question, @answer)
-    else
-      render :edit
+  def destroy
+    if @answer.user == current_user
+      @answer.destroy
     end
+
+    render :update
   end
 
   private

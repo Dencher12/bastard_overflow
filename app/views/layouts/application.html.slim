@@ -1,0 +1,24 @@
+html
+  head
+    title BastardOverflow
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+    script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"
+
+  body
+  
+    - if current_user.nil?
+      = link_to 'Sign in', new_user_session_path
+    - else
+      = link_to 'Exit', destroy_user_session_path, method: :delete
+
+    p class="notice"
+      = notice 
+    p class="alert"
+      = alert
+
+    = yield
+

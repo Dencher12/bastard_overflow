@@ -1,0 +1,7 @@
+tr
+  td = answer.body
+  - if answer.user == current_user
+    td = link_to 'Delete Answer', 
+                  question_answer_path(@question, answer),
+                  method: :delete, 
+                  remote: true
