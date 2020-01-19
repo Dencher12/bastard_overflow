@@ -7,7 +7,7 @@ feature 'Answer question', %q{
 } do
   given(:user) { create(:user) }
 
-  scenario 'Signed in user tries to answer question' do
+  scenario 'Signed in user tries to answer question', js: true do
     sign_in(user)
 
     question = create(:question, user: user)
