@@ -20,6 +20,6 @@ table border = "1" rules="all"
       th colspan="3" Actions
 
   tbody class='answers'
-    = render 'answers'
+    = render @question.answers
 
-= render 'answer_form'
+= render 'answers/answer_form'

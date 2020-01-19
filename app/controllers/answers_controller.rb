@@ -7,7 +7,6 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
     @answer.save
-    render :update
   end
 
   def destroy

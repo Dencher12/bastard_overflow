@@ -1,8 +1,0 @@
-- @question.answers.each do |a|
-      tr
-        td = a.body
-        - if a.user == current_user
-          td = link_to 'Delete Answer', 
-                       question_answer_path(@question, a),
-                       method: :delete, 
-                       remote: true
