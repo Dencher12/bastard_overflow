@@ -1,7 +1,23 @@
 tr
   td = answer.body
   - if answer.user == current_user
-    td = link_to 'Delete Answer', 
+    td = link_to 'Delete', 
                   question_answer_path(@question, answer),
                   method: :delete, 
                   remote: true
+    td = link_to 'Edit', '', class: 'edit-answer-link', data: {answer_id: answer.id}
+
+- if answer.user == current_user
+  tr
+    td colspan='3'
+     = form_for [@question, answer], remote: true, html: {class: "edit-answer edit-answer-#{answer.id}"} do |f| 
+  
+      div class="field"
+        h4
+          = f.label :body, 'Your Answer'
+        div class='answer_errors'  
+        = f.text_area :body
+
+      div class="actions"
+        br
+        = f.submit 'Answer'
