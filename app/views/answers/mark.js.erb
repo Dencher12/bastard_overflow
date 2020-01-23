@@ -1,0 +1,7 @@
+<% @question.answers.each do |answer|%>
+  <% if answer.mark %>
+    $('.mark.answer-id-<%= answer.id %>').show();
+  <% else %>
+    $('.mark.answer-id-<%= answer.id %>').hide();
+  <% end %>  
+<% end %>

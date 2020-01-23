@@ -28,5 +28,4 @@ feature 'Edit answer', %q{
       expect(page).to have_content 'Edited answer'
     end
   end
-  scenario 'Non-author tries to edit an answer'
 end

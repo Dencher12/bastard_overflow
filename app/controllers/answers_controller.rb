@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_answer, only: %i[destroy update]
-  before_action :set_question, only: %i[create destroy update]
+  before_action :set_answer, only: %i[destroy update mark]
+  before_action :set_question, only: %i[create destroy update mark]
 
   def create
     @answer = @question.answers.new(answer_params)
@@ -10,15 +10,27 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    if @answer.user == current_user
-      @answer.destroy
-    end
+    return unless @answer.user == current_user
+
+    @answer.destroy
 
     render :update
   end
 
   def update
     @answer.update(answer_params)
+  end
+
+  def mark
+    return unless @question.user == current_user
+
+    @question.answers.each do |answer|
+      answer.mark = false
+      answer.mark = true if answer == @answer
+      answer.save
+    end
+
+    render :update
   end
 
   private

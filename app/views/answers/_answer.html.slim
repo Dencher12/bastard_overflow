@@ -1,23 +1,35 @@
-tr
-  td = answer.body
+div class="answer_block answer_id_#{answer.id}"
+  div class="mark-conteiner"
+    img src='/assets/mark.png' class="mark answer-id-#{answer.id} #{answer.mark ? 'visible' : ''}" width="36px" height="36px"
+  div class='answer-main'
+    p class="answer-paragraph" = answer.body
+    - if answer.user == current_user
+      span = link_to 'Delete',
+                    question_answer_path(@question, answer),
+                    method: :delete, 
+                    remote: true,
+                    class: 'delete-answer-link'
+      span = link_to 'Edit', '', class: 'edit-answer-link', data: {answer_id: answer.id} 
+
+    - if @question.user == current_user
+      span = link_to 'The best', 
+                      mark_question_answer_path(@question, answer),
+                      method: :patch, 
+                      class: 'mark-link', remote: true
+
   - if answer.user == current_user
-    td = link_to 'Delete', 
-                  question_answer_path(@question, answer),
-                  method: :delete, 
-                  remote: true
-    td = link_to 'Edit', '', class: 'edit-answer-link', data: {answer_id: answer.id}
+    tr
+      td colspan='3'
+      = form_for [@question, answer], remote: true, html: {class: "edit-answer edit-answer-#{answer.id}"} do |f| 
+    
+        div class="field"
+          h4
+            = f.label :body, 'Your Answer'
+          div class='answer_errors'  
+          = f.text_area :body
 
-- if answer.user == current_user
-  tr
-    td colspan='3'
-     = form_for [@question, answer], remote: true, html: {class: "edit-answer edit-answer-#{answer.id}"} do |f| 
-  
-      div class="field"
-        h4
-          = f.label :body, 'Your Answer'
-        div class='answer_errors'  
-        = f.text_area :body
+        div class="actions"
+          br
+          = f.submit 'Answer'
 
-      div class="actions"
-        br
-        = f.submit 'Answer'
+hr

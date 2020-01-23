@@ -5,6 +5,11 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   resources :questions do
-    resources :answers
+    resources :answers do
+      member do
+        patch :mark
+      end
+    end
   end
+
 end

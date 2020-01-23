@@ -1,5 +1,4 @@
 $(document).ready(function(){
-  console.log("fdgsfg");
  $('.edit-answer-link').click(function(e){
    e.preventDefault();
 

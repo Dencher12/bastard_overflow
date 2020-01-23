@@ -12,9 +12,9 @@
 
   div class="field"
     h4
-      = f.label :body, 'Your Answer'
+      = f.label :body,'Your Answer', for: 'create_answer_field'
     div class='answer_errors'  
-    = f.text_area :body
+    = f.text_area :body, id: 'create_answer_field'
 
   div class="actions"
     br
