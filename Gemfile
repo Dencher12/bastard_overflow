@@ -25,6 +25,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'slim-rails'
 gem 'devise'
 gem 'jquery-rails'
+gem 'carrierwave'
 
 
 # Use Active Storage variant
