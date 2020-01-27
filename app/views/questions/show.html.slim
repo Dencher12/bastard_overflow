@@ -7,7 +7,12 @@ div class = 'question'
   p 
     strong Question: 
     span id='question_body' 
-      = @question.body 
+      = @question.body
+
+  p Attachments:
+  ul
+    - @question.attachments.each do |a|
+      li = link_to a.file.identifier, a.file.url
 
   - if @question.user == current_user
     p = link_to 'Edit question', '', class: 'edit-question-link' 
