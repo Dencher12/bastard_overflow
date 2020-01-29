@@ -13,9 +13,11 @@ feature 'Attach a file to a question', %q{
     visit new_question_path
   end
 
-  scenario 'Auth user try to attach file when asks question' do
+  scenario 'Auth user try to attach file when asks question', js: true do
     fill_in 'Title', with: '?'
     fill_in 'Body', with: '???'
+    click_link 'add attachment'
+
     attach_file 'File', "#{Rails.root}/spec/rails_helper.rb"
     click_on 'Create Question'
     expect(page).to have_link 'rails_helper.rb'

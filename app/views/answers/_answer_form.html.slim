@@ -17,10 +17,8 @@
     = f.text_area :body, id: 'create_answer_field'
 
     p Attachments:
-    p
-      = f.fields_for :attachments do |a|
-        p = a.label :file
-        p = a.file_field :file
+    .links
+      = link_to_add_association 'add attachment', f, :attachments
 
   div class="actions"
     br

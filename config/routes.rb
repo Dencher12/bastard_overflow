@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   get 'welcome/index'
   root 'welcome#index'
 
+  resources :attachments, only: %i[destroy]
+
   resources :questions do
     resources :answers do
       member do
@@ -11,5 +13,4 @@ Rails.application.routes.draw do
       end
     end
   end
-
 end

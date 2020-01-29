@@ -15,9 +15,10 @@ feature 'Attach a file to an answer', %q{
 
   scenario 'Auth user tries to attach file when answers question', js: true do
     fill_in 'Your Answer', with: 'Ultimate Answer'
+    click_on 'add attachment'
     attach_file 'File', "#{Rails.root}/spec/rails_helper.rb"
     click_on 'Answer'
-    
+
     within('.answers') do
       expect(page).to have_link 'rails_helper.rb'
     end

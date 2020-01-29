@@ -6,7 +6,9 @@ div class="answer_block answer_id_#{answer.id}"
     p Attachments:
     ul
       - answer.attachments.each do |a|
-          li = link_to a.file.identifier, a.file.url
+          li 
+            p = link_to a.file.identifier, a.file.url
+            p = link_to 'Delete attachment', attachment_path(a), method: :delete
     - if answer.user == current_user
       span = link_to 'Delete',
                     question_answer_path(@question, answer),
@@ -31,6 +33,12 @@ div class="answer_block answer_id_#{answer.id}"
             = f.label :body, 'Your Answer'
           div class='answer_errors'  
           = f.text_area :body
+
+          p Attachments:
+          = f.fields_for :attachments do |a|
+            = render 'attachment_fields', f: a
+          .links
+            = link_to_add_association 'add attachment', f, :attachments
 
         div class="actions"
           br
