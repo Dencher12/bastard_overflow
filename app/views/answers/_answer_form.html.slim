@@ -16,6 +16,12 @@
     div class='answer_errors'  
     = f.text_area :body, id: 'create_answer_field'
 
+    p Attachments:
+    p
+      = f.fields_for :attachments do |a|
+        p = a.label :file
+        p = a.file_field :file
+
   div class="actions"
     br
     = f.submit 'Answer'
