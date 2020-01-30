@@ -12,9 +12,7 @@ h1 Question
   p Attachments:
   ul.attachments
     - @question.attachments.each do |a|
-      li 
-        p = link_to a.file.identifier, a.file.url 
-        p = link_to 'Delete attachment', attachment_path(a), method: :delete
+      = render 'attachments/attachment', attachment: a
 
   - if @question.user == current_user
     p = link_to 'Edit question', '', class: 'edit-question-link' 

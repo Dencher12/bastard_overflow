@@ -6,6 +6,13 @@ class AttachmentsController < ApplicationController
     return unless @attachment.attachable.user == current_user
 
     @attachment.destroy
+
+    case @attachment.attachable_type
+    when 'Question'
+      redirect_to @attachment.attachable
+    when 'Answer'
+      redirect_to @attachment.attachable.question
+    end
   end
 
   private
