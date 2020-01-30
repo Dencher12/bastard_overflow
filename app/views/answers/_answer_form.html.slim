@@ -12,8 +12,13 @@
 
   div class="field"
     h4
-      = f.label :body, 'Your Answer'
-    = f.text_area :body
+      = f.label :body,'Your Answer', for: 'create_answer_field'
+    div class='answer_errors'  
+    = f.text_area :body, id: 'create_answer_field'
+
+    p Attachments:
+    .links
+      = link_to_add_association 'add attachment', f, :attachments
 
   div class="actions"
     br

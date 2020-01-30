@@ -1,4 +1,4 @@
-= form_for question do |f|
+= form_for question, remote: js do |f|
   - if question.errors.any?
       div id="error_explanation"
         h2 
@@ -19,6 +19,10 @@
     = f.label :body
     br
     = f.text_area :body
+
+  p Attachments:
+  .links
+     = link_to_add_association 'add attachment', f, :attachments
 
   div class="actions"
     br

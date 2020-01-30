@@ -22,10 +22,11 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-gem 'slim-rails'
+gem 'carrierwave'
+gem 'cocoon'
 gem 'devise'
 gem 'jquery-rails'
-
+gem 'slim-rails'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -39,6 +40,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 4.0.0.beta3'
   gem 'rails-controller-testing'
   gem "factory_bot_rails"
+  gem 'capybara-webkit'
 end
 
 group :development do

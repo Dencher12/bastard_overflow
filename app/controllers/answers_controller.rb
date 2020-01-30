@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_answer, only: %i[destroy]
-  before_action :set_question, only: %i[create destroy]
+  before_action :set_answer, only: %i[destroy update mark]
+  before_action :set_question, only: %i[create destroy update mark]
 
   def create
     @answer = @question.answers.new(answer_params)
@@ -10,8 +10,24 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    if @answer.user == current_user
-      @answer.destroy
+    return unless @answer.user == current_user
+
+    @answer.destroy
+
+    render :update
+  end
+
+  def update
+    @answer.update(answer_params)
+  end
+
+  def mark
+    return unless @question.user == current_user
+
+    @question.answers.each do |answer|
+      answer.mark = false
+      answer.mark = true if answer == @answer
+      answer.save
     end
 
     render :update
@@ -24,7 +40,7 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body)
+    params.require(:answer).permit(:body, attachments_attributes: [:id, :file, :destroy])
   end
 
   def set_question

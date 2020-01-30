@@ -1,0 +1,10 @@
+$('#question_title').html('<%= @question.title %>');
+$('#question_body').html('<%= @question.body %>');
+$('.edit-question-link').html('Edit question');
+$('.edit_question').hide();
+
+<% @question.attachments.each do |a| %>
+  $('ul.attachments').append('<%= render 'attachments/attachment', attachment: a  %>');
+<% end %>
+
+

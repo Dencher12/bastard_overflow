@@ -1,25 +1,26 @@
 h1 Question
-div 
-  strong Title: 
-  = @question.title
-div 
-  div
+.question
+  p 
+    strong Title: 
+    span id='question_title' 
+      = @question.title 
+  p 
     strong Question: 
-  div style="max-width:300px" = @question.body
-  br
-  
+    span id='question_body' 
+      = @question.body
+
+  p Attachments:
+  ul.attachments
+    - @question.attachments.each do |a|
+      = render 'attachments/attachment', attachment: a
+
   - if @question.user == current_user
-    = link_to 'Delete Question', question_path(@question), method: :delete
+    p = link_to 'Edit question', '', class: 'edit-question-link' 
+    = render 'form', question: @question, js: true
+    p = link_to 'Delete Question', question_path(@question), method: :delete
     
 
 h3 Answers
-table border = "1" rules="all"
-  thead
-    tr
-      th Answer
-      th colspan="3" Actions
-
-  tbody class='answers'
-    = render @question.answers
+div class='answers' = render @question.answers.sorted
 
 = render 'answers/answer_form'
