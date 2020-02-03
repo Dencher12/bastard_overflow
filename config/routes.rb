@@ -8,9 +8,9 @@ Rails.application.routes.draw do
 
   resources :questions do
     resources :answers do
-      member do
-        patch :mark
-      end
+      member { patch :mark }
+      member { patch :rate_up }
+      member { patch :rate_down }
     end
   end
 end
