@@ -1,17 +1,20 @@
 div class="answer_block answer_id_#{answer.id}"
+  .errors
   .rating-block
     .rate
-      .rate_up = link_to 'rate up', 
-                    rate_up_question_answer_path(@question, answer),
+      .rate_up = link_to rate_up_question_answer_path(@question, answer),
                     method: :patch,
                     remote: true,
-                    data: { type: :json }
+                    data: { type: :json } do 
+                    img src='/assets/arrow-down.png' class='arrow arrow-up'
       .rating = answer.rating
-      .rate_down = link_to 'rate down',
-                    rate_down_question_answer_path(@question, answer),
+
+      .rate_down = link_to rate_down_question_answer_path(@question, answer),
                     method: :patch,
                     remote: true,
-                    data: { type: :json }
+                    data: { type: :json } do 
+                    img src='/assets/arrow-down.png' class='arrow arrow-down'
+       
     img src='/assets/mark.png' class="mark answer-id-#{answer.id} #{answer.mark ? 'visible' : ''}" width="36px" height="36px"                
 
   div class='answer-main'

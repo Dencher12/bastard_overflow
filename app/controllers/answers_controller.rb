@@ -34,24 +34,33 @@ class AnswersController < ApplicationController
   end
 
   def rate_up
-    @answer.rating += 1 if current_user != @answer.user
-    @answer.save
-    respond_to do |format|
-      format.json { render json: @answer, status: :ok }
-      format.html
-    end
+    @answer.rating += 1
+    rate
   end
 
   def rate_down
-    @answer.rating -= 1 if current_user != @answer.user
-    @answer.save
-    json_respond
+    @answer.rating -= 1
+    rate
   end
 
   private
 
   def set_answer
     @answer = Answer.find(params[:id])
+  end
+
+  def rate
+    if current_user != @answer.user
+      if @answer.rate_users.include?(current_user)
+        render json: { answer_id: @answer.id, error: 'You have already voted' }, status: :method_not_allowed
+      else
+        @answer.rate_users << current_user
+        @answer.save
+        render json: @answer, status: :ok
+      end
+    else
+      render json: { answer_id: @answer.id, error: 'You cannot vote for your answer' }, status: :forbidden
+    end
   end
 
   def answer_params

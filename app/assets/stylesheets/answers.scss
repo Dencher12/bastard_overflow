@@ -13,6 +13,11 @@
   display: inline-block;
   vertical-align: top;
   margin-top: 16px;
+  width: 36px;
+}
+
+.rating {
+  text-align: center;
 }
 
 .answer-main {
@@ -22,6 +27,14 @@
 
 .mark.visible {
   display: block;
+}
+
+.arrow {
+  width: 36px;
+}
+
+.arrow-up {
+  rotate: 180deg;
 }
 
 .answer-paragraph {max-width: 600px}

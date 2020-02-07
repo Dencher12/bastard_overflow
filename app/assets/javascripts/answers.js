@@ -14,12 +14,22 @@ $(document).ready(function(){
    
  });
 
- $('.rate_up').bind('ajax:success', success_rating_update);
- $('.rate_down').bind('ajax:success', success_rating_update);
+ $('.rate_up').bind('ajax:success', success_rating_update)
+              .bind('ajax:error', error_rating_update);
+
+ $('.rate_down').bind('ajax:success', success_rating_update)
+                .bind('ajax:error', error_rating_update);
 
  function success_rating_update(e) {
-  answer = e.detail[0]
+  answer = e.detail[0];
   $('.answer_id_'+answer.id+' .rating').html(answer.rating);
+ }
+
+ function error_rating_update(e) {
+  answer_id = e.detail[0].answer_id;
+  error = e.detail[0].error;
+ 
+  $('.answer_id_'+answer_id+' .errors').html(error);
  }
 
 });
