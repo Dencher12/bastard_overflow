@@ -7,6 +7,8 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
     @answer.save
+
+    ActionCable.server.broadcast 'answers', answer: render_answer
   end
 
   def destroy
@@ -61,6 +63,22 @@ class AnswersController < ApplicationController
     else
       render json: { answer_id: @answer.id, error: 'You cannot vote for your answer' }, status: :forbidden
     end
+  end
+
+  def render_answer
+    return if @answer.errors.any?
+
+    ApplicationController.renderer.instance_variable_set(:@env, {
+      'HTTP_HOST' => 'localhost:3000',
+      'HTTPS' => 'off',
+      'REQUEST_METHOD' => 'GET',
+      'SCRIPT_NAME' => '',
+      'warden' => warden })
+
+    ApplicationController.render(
+      partial: 'answers/answer',
+      locals: { answer: @answer, question: @question }
+    )
   end
 
   def answer_params

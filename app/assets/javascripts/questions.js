@@ -11,4 +11,19 @@ $(document).ready(function(){
    $('.edit_question').toggle();
    
  });
+
+ 
+  App.cable.subscriptions.create('QuestionsChannel', 
+    { 
+      connected: function() {
+        console.log('Connected!');
+        this.perform('follow')
+      },
+      received: function(data) {
+        $('tbody.questions').append(data)
+      }
+    }
+  );
+
 });
+

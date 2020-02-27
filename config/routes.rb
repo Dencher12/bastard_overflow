@@ -13,4 +13,6 @@ Rails.application.routes.draw do
       member { patch :rate_down }
     end
   end
+
+  mount ActionCable.server => '/cable'
 end

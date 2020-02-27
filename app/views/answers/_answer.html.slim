@@ -2,14 +2,14 @@ div class="answer_block answer_id_#{answer.id}"
   .errors
   .rating-block
     .rate
-      .rate_up = link_to rate_up_question_answer_path(@question, answer),
+      .rate_up = link_to rate_up_question_answer_path(question, answer),
                     method: :patch,
                     remote: true,
                     data: { type: :json } do 
                     img src='/assets/arrow-down.png' class='arrow arrow-up'
       .rating = answer.rating
 
-      .rate_down = link_to rate_down_question_answer_path(@question, answer),
+      .rate_down = link_to rate_down_question_answer_path(question, answer),
                     method: :patch,
                     remote: true,
                     data: { type: :json } do 
@@ -25,22 +25,22 @@ div class="answer_block answer_id_#{answer.id}"
         = render 'attachments/attachment', attachment: a
     - if answer.user == current_user
       span = link_to 'Delete',
-                    question_answer_path(@question, answer),
+                    question_answer_path(question, answer),
                     method: :delete, 
                     remote: true,
                     class: 'delete-answer-link'
       span = link_to 'Edit', '', class: 'edit-answer-link', data: {answer_id: answer.id} 
 
-    - if @question.user == current_user
+    - if question.user == current_user
       span = link_to 'The best', 
-                      mark_question_answer_path(@question, answer),
+                      mark_question_answer_path(question, answer),
                       method: :patch, 
                       class: 'mark-link', remote: true
 
   - if answer.user == current_user
     tr
       td colspan='3'
-      = form_for [@question, answer], remote: true, html: {class: "edit-answer edit-answer-#{answer.id}"} do |f| 
+      = form_for [question, answer], remote: true, html: {class: "edit-answer edit-answer-#{answer.id}"} do |f| 
     
         div class="field"
           h4
@@ -52,7 +52,7 @@ div class="answer_block answer_id_#{answer.id}"
           = f.fields_for :attachments do |a|
             = render 'attachment_fields', f: a
           .links
-            = link_to_add_association 'add attachment', f, :attachments
+            = link_to_add_association 'add attachment', f, :attachments, partial: 'answers/attachment_fields'
 
         div class="actions"
           br

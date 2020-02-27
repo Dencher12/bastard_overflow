@@ -32,4 +32,17 @@ $(document).ready(function(){
   $('.answer_id_'+answer_id+' .errors').html(error);
  }
 
+ App.cable.subscriptions.create('AnswersChannel', 
+    { 
+      connected: function() {
+        console.log('Connected!');
+        this.perform('follow')
+      },
+      received: function(data) {
+        console.log(data)
+        $('.answers').append(data.answer)
+      }
+    }
+  );
+
 });
