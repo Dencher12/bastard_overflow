@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   resources :questions do
     resources :answers do
+      resources :comments
       member { patch :mark }
       member { patch :rate_up }
       member { patch :rate_down }
