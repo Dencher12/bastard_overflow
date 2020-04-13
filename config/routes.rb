@@ -8,9 +8,12 @@ Rails.application.routes.draw do
 
   resources :questions do
     resources :answers do
-      member do
-        patch :mark
-      end
+      resources :comments
+      member { patch :mark }
+      member { patch :rate_up }
+      member { patch :rate_down }
     end
   end
+
+  mount ActionCable.server => '/cable'
 end
