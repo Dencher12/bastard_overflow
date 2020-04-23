@@ -4,5 +4,5 @@
     $('.answer_errors').html('<%= j message %>');
   <% end %>
 <% else %>
-  $('.answers').html('<%= j render @question.answers.sorted, question: @question %>');
+  $('.answers').html('<%= j render @question.answers.sorted, question: @question, comment: @comment %>');
 <% end %>

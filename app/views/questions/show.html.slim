@@ -21,6 +21,6 @@ h1 Question
     
 
 h3 Answers
-div class='answers' = render @question.answers.sorted, question: @question
+div class='answers' = render @question.answers.sorted, question: @question, comment: @comment
 
 = render 'answers/answer_form'

@@ -13,7 +13,7 @@ class AnswersController < ApplicationController
 
   def destroy
     return unless @answer.user == current_user
-
+    @comment = Comment.new
     @answer.destroy
 
     render :update
