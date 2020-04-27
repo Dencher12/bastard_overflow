@@ -1,13 +1,18 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_answer, only: %i[create]
-  before_action :set_question, only: %i[create]
-
+  
   def create
-    @comment = @answer.comments.new(comment_params)
-    @comment.save
-
-    ActionCable.server.broadcast 'answers', answer: render_answer
+    comment_type = params[:comment][:comment_type]
+    if comment_type == 'question'
+      set_question
+      @comment = @question.comments.create(comment_params)
+      ActionCable.server.broadcast 'comments', comment: render_comment, comment_type: comment_type
+    else
+      set_answer
+      @comment = @answer.comments.create(comment_params)
+      ActionCable.server.broadcast 'comments', comment: render_comment, comment_type: comment_type, answer_id: @answer.id
+    end  
+    
   end
 
   private
@@ -20,9 +25,7 @@ class CommentsController < ApplicationController
     @answer = Answer.find(params[:answer_id])
   end
 
-  def render_answer
-    return if @answer.errors.any?
-
+  def render_comment
     ApplicationController.renderer.instance_variable_set(:@env, {
       'HTTP_HOST' => 'localhost:3000',
       'HTTPS' => 'off',
@@ -31,8 +34,8 @@ class CommentsController < ApplicationController
       'warden' => warden })
 
     ApplicationController.render(
-      partial: 'answers/answer',
-      locals: { answer: @answer, question: @answer.question }
+      partial: 'comments/comment',
+      locals: { comment: @comment }
     )
   end
 

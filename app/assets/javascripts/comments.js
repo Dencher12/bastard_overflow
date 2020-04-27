@@ -6,7 +6,11 @@ $(document).ready(function(){
            this.perform('follow')
          },
          received: function(data) {
-           $('tbody.questions').append(data)
+           if (data.comment_type == "answer") {
+            $(".answer_id_" + data.answer_id + " .comments").append(data.comment)
+           } else {
+            $(".question .comments").append(data.comment)
+           } 
          }
        }
      );

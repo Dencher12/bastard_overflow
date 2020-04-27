@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :attachments, only: %i[destroy]
 
   resources :questions do
+    resources :comments
     resources :answers do
       resources :comments
       member { patch :mark }

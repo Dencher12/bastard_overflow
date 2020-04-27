@@ -58,6 +58,6 @@ div class="answer_block answer_id_#{answer.id}"
           br
           = f.submit 'Answer'
        
-  = render answer.comments
-  = render 'comments/comment_form', answer: answer, question: question
+  .comments = render answer.comments
+  = render 'comments/comment_form', answer: answer, question: question, comment_type: 'answer'
 hr

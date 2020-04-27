@@ -11,4 +11,15 @@ class Answer < ApplicationRecord
   accepts_nested_attributes_for :attachments
 
   scope :sorted, -> { order(mark: :desc) }
+
+  def set_user(user)
+    self.user = user
+    self.save
+    self
+  end
+
+  def add_to_rate_users(user)
+    self.rate_users << user
+    self.save
+  end  
 end

@@ -27,6 +27,7 @@ gem 'cocoon'
 gem 'devise'
 gem 'jquery-rails'
 gem 'slim-rails'
+gem 'responders'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

@@ -2,18 +2,16 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_answer, only: %i[destroy update mark rate_up rate_down]
   before_action :set_question, only: %i[create destroy update mark]
+  after_action :publish_answer, only: [:create]
+
+  respond_to :html
 
   def create
-    @answer = @question.answers.new(answer_params)
-    @answer.user = current_user
-    @answer.save
-
-    ActionCable.server.broadcast 'answers', answer: render_answer
+    @answer = @question.answers.create(answer_params).set_user(current_user)
   end
 
   def destroy
     return unless @answer.user == current_user
-    @comment = Comment.new
     @answer.destroy
 
     render :update
@@ -26,12 +24,7 @@ class AnswersController < ApplicationController
   def mark
     return unless @question.user == current_user
 
-    @question.answers.each do |answer|
-      answer.mark = false
-      answer.mark = true if answer == @answer
-      answer.save
-    end
-
+    @question.mark_answer(@answer)
     render :update
   end
 
@@ -44,7 +37,7 @@ class AnswersController < ApplicationController
     @answer.rating -= 1
     rate
   end
-
+  
   private
 
   def set_answer
@@ -56,8 +49,7 @@ class AnswersController < ApplicationController
       if @answer.rate_users.include?(current_user)
         render json: { answer_id: @answer.id, error: 'You have already voted' }, status: :method_not_allowed
       else
-        @answer.rate_users << current_user
-        @answer.save
+        @answer.add_to_rate_users(current_user)
         render json: @answer, status: :ok
       end
     else
@@ -65,7 +57,7 @@ class AnswersController < ApplicationController
     end
   end
 
-  def render_answer
+  def publish_answer
     return if @answer.errors.any?
 
     ApplicationController.renderer.instance_variable_set(:@env, {
@@ -75,9 +67,12 @@ class AnswersController < ApplicationController
       'SCRIPT_NAME' => '',
       'warden' => warden })
 
-    ApplicationController.render(
-      partial: 'answers/answer',
-      locals: { answer: @answer, question: @question }
+    ActionCable.server.broadcast(
+      'answers',
+      answer: ApplicationController.render(
+        partial: 'answers/answer',
+        locals: { answer: @answer, question: @question }
+      )
     )
   end
 

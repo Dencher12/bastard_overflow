@@ -3,42 +3,33 @@ class QuestionsController < ApplicationController
   before_action :set_question, only: %i[show edit destroy update]
   after_action :publish_question, only: [:create]
 
+  respond_to :html
+
   def index
-    @questions = Question.all
+    respond_with(@questions = Question.all)
   end
 
   def show
-    @answer = Answer.new
-    @comment = Comment.new
-    @answer.attachments.build
+    respond_with @question
   end
 
   def new
-    @question = Question.new
-    @attachment = @question.attachments.build
+    respond_with(@question = Question.new)
   end
 
   def edit; end
 
   def create
-    @question = Question.new(question_params)
-    @question.user = current_user
-    if @question.save
-      redirect_to question_path(@question)
-    else
-      render :edit
-    end
+    respond_with (@question = Question.new(question_params).set_user(current_user))
   end
 
   def destroy
-    if @question.user == current_user
-      @question.destroy
-      redirect_to questions_path
-    end
+    respond_with(@question.destroy) if @question.user == current_user
   end
 
   def update
     @question.update(question_params)
+    respond_with @question
   end
 
   private
