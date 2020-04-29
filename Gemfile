@@ -28,6 +28,8 @@ gem 'devise'
 gem 'jquery-rails'
 gem 'slim-rails'
 gem 'responders'
+gem 'omniauth'
+gem 'omniauth-github'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
