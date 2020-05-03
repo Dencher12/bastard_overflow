@@ -1,6 +1,8 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
   
+  authorize_resource
+  
   def create
     comment_type = params[:comment][:comment_type]
     if comment_type == 'question'

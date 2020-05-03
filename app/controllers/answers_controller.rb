@@ -6,6 +6,8 @@ class AnswersController < ApplicationController
 
   respond_to :html
 
+  authorize_resource
+
   def create
     @answer = @question.answers.create(answer_params).set_user(current_user)
   end

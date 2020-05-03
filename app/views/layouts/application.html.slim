@@ -12,6 +12,7 @@ html
 
   body
   
+    = link_to 'Home ', welcome_index_path
     - if current_user.nil?
       = link_to 'Sign in', new_user_session_path
     - else
