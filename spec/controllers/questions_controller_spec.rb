@@ -47,20 +47,6 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-  describe 'GET #edit' do
-    sign_in
-
-    before { get :edit, params: {id: question.id} }
-
-    it 'finds question by id and assigns to a variable' do
-      expect(assigns(:question)).to eq(question)
-    end
-
-    it 'renders edit view' do
-      expect(response).to render_template :edit
-    end
-  end
-
   describe 'POST #create' do
     sign_in
 
@@ -84,9 +70,9 @@ RSpec.describe QuestionsController, type: :controller do
         expect { post :create, params: { question: attr } }.to_not change(Question, :count)
       end
 
-      it 'renders the edit view' do
+      it 'renders the new view' do
         post :create, params: { question: attr }
-        expect(response).to render_template :edit
+        expect(response).to render_template :new
       end
     end
   end

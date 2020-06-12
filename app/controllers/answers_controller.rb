@@ -2,7 +2,7 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_answer, only: %i[destroy update mark rate_up rate_down]
   before_action :set_question, only: %i[create destroy update mark]
-  after_action :publish_answer, only: [:create]
+  after_action :publish_answer, only: %i[create]
 
   respond_to :html
 
@@ -21,6 +21,7 @@ class AnswersController < ApplicationController
 
   def update
     @answer.update(answer_params)
+    render :update
   end
 
   def mark

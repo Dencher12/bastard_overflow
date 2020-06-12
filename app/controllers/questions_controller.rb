@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :set_question, only: %i[show edit destroy update]
+  before_action :set_question, only: %i[show destroy update]
   after_action :publish_question, only: [:create]
 
   respond_to :html
@@ -18,8 +18,6 @@ class QuestionsController < ApplicationController
   def new
     respond_with(@question = Question.new)
   end
-
-  def edit; end
 
   def create
     respond_with (@question = Question.new(question_params).set_user(current_user))
