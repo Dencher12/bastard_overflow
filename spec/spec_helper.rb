@@ -12,6 +12,9 @@
 # the additional setup, and require it from the spec files that actually need
 # it.
 #
+require 'sidekiq/testing'
+Sidekiq::Testing.inline!
+
 require 'factory_bot'
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|

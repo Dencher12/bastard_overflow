@@ -12,6 +12,9 @@ class User < ApplicationRecord
 
   validates :email, presence: true
 
+  def self.send_daily_digest
+  end  
+
   def self.find_for_oauth(auth)
     authhorization = Authhorization.where(provider: auth.provider, uid: auth.uid.to_s).first
     return authhorization.user if authhorization
