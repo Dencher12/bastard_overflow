@@ -1,4 +1,4 @@
 :schedule:
   daily_digest:
-    cron: '0 52 12 * * *'
-    class: DailyDigestWorker
+    cron: '0 45 13 * * *'
+    class: SendDailyDigestJob
