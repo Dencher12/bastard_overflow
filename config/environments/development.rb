@@ -11,10 +11,10 @@ Rails.application.configure do
 
   Sidekiq::Extensions.enable_delay!
   
+
   # Show full error reports.
   config.consider_all_requests_local = true
 
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
@@ -65,4 +65,18 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   config.hosts << "dencher12.ddns.net"
+
+   # ActionMailer settings
+   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+   config.action_mailer.delivery_method = :smtp
+   config.action_mailer.raise_delivery_errors = true
+   config.action_mailer.smtp_settings = {
+     address: 'smtp.gmail.com',
+     port: '587',
+     domain: 'gmail.com',
+     user_name: 'onemorefaketutu@gmail.com',
+     password: 'awesomepassworD2007',
+     authentication: 'plain',
+     enable_starttls_auto: true
+   }
 end

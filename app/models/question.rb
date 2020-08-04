@@ -8,6 +8,11 @@ class Question < ApplicationRecord
 
   accepts_nested_attributes_for :attachments
 
+  def self.todays
+    Question.all.select {|q| "#{q.created_at.day}-#{q.created_at.month}-#{q.created_at.year}" == "#{Time.now.day}-#{Time.now.month}-#{Time.now.year}" }
+  end  
+
+
   def set_user(user)
     self.user = user
     self.save

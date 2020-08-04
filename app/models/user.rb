@@ -13,6 +13,7 @@ class User < ApplicationRecord
   validates :email, presence: true
 
   def self.send_daily_digest
+    UserMailer.daily_digest.deliver_now
   end  
 
   def self.find_for_oauth(auth)
