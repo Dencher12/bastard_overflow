@@ -12,7 +12,7 @@ class Answer < ApplicationRecord
 
   scope :sorted, -> { order(mark: :desc) }
 
-  after_commit :send_out
+  after_create :send_out
 
   def send_out
     question.subscriptions.each do |s|

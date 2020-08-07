@@ -19,6 +19,11 @@ h1 Question
     .edit_question = render 'form', question: @question, js: true
   - if can?(:destroy, @question)  
     p = link_to 'Delete Question', question_path(@question), method: :delete
+
+  - if current_user.subscribed?(@question)
+    p = link_to 'Unsubscribe', unsubscribe_question_path(@question), method: :delete
+  - else  
+    P = link_to 'Subscribe', subscribe_question_path(@question), method: :patch
     
   .comments = render @question.comments, comment: @comment  
   = render 'comments/comment_form', question: @question, answer: nil, comment_type: 'question'  

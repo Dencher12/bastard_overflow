@@ -15,7 +15,15 @@ class User < ApplicationRecord
 
   def subscribe(question)
     subscriptions << Subscription.create(user: self, question: question)
-  end  
+  end
+
+  def unsubscribe(question)
+    subscriptions.where(question: question).first.destroy
+  end
+
+  def subscribed?(question)
+    subscriptions.where(question: question).size == 1
+  end 
 
   def self.send_daily_digest
     UserMailer.daily_digest.deliver_later
@@ -23,6 +31,7 @@ class User < ApplicationRecord
 
   def send_new_answer_notice(question)
     UserMailer.new_answer_notice_author(self, question).deliver_later if self == question.user
+    UserMailer.new_answer_notice(self, question).deliver_later if self != question.user
   end  
   
   def self.find_for_oauth(auth)

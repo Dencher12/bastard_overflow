@@ -21,6 +21,8 @@ Rails.application.routes.draw do
       member { patch :rate_up }
       member { patch :rate_down }
     end
+    member { patch :subscribe }
+    member { delete :unsubscribe }
   end
 
   mount ActionCable.server => '/cable'

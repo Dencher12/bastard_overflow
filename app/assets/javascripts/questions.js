@@ -12,7 +12,6 @@ $(document).ready(function(){
    
  });
 
- 
   App.cable.subscriptions.create('QuestionsChannel', 
     { 
       connected: function() {

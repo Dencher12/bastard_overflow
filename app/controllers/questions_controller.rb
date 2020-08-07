@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :set_question, only: %i[show destroy update]
+  before_action :set_question, only: %i[show destroy update subscribe unsubscribe]
   after_action :publish_question, only: [:create]
 
   respond_to :html
@@ -33,6 +33,16 @@ class QuestionsController < ApplicationController
     @question.update(question_params)
     respond_with @question
   end
+
+  def subscribe
+    current_user.subscribe(@question)
+    render :show
+  end
+  
+  def unsubscribe
+    current_user.unsubscribe(@question)
+    render :show
+  end  
 
   private
 

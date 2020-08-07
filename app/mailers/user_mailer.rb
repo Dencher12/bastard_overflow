@@ -14,4 +14,9 @@ class UserMailer < ApplicationMailer
     mail(to: @user.email, subject: 'Your question was answered!')
   end
 
+  def new_answer_notice(user, question)
+    @user = user
+    @question = question
+    mail(to: @user.email, subject: 'The question you are subscribed was answered!')
+  end
 end
