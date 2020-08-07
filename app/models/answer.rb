@@ -12,6 +12,14 @@ class Answer < ApplicationRecord
 
   scope :sorted, -> { order(mark: :desc) }
 
+  after_commit :send_out
+
+  def send_out
+    question.subscriptions.each do |s|
+      s.user.send_new_answer_notice(question)
+    end  
+  end  
+
   def set_user(user)
     self.user = user
     self.save

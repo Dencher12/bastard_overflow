@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_many :answers
   has_many :questions
+  has_many :subscriptions
   has_many :users_rate_answers
   has_many :rate_answers, through: :users_rate_answers, source: :answer
   has_many :authhorizations
@@ -12,10 +13,18 @@ class User < ApplicationRecord
 
   validates :email, presence: true
 
-  def self.send_daily_digest
-    UserMailer.daily_digest.deliver_later
+  def subscribe(question)
+    subscriptions << Subscription.create(user: self, question: question)
   end  
 
+  def self.send_daily_digest
+    UserMailer.daily_digest.deliver_later
+  end 
+
+  def send_new_answer_notice(question)
+    UserMailer.new_answer_notice_author(self, question).deliver_later if self == question.user
+  end  
+  
   def self.find_for_oauth(auth)
     authhorization = Authhorization.where(provider: auth.provider, uid: auth.uid.to_s).first
     return authhorization.user if authhorization

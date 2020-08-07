@@ -20,7 +20,9 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    respond_with (@question = Question.new(question_params).set_user(current_user))
+    @question = Question.new(question_params).set_user(current_user)
+    @question.user.subscribe(@question)
+    respond_with (@question)
   end
 
   def destroy
