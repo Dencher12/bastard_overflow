@@ -34,6 +34,8 @@ gem 'cancancan'
 gem 'sidekiq'
 gem 'sinatra', '~> 2.0', '>= 2.0.8.1', require: nil
 gem 'sidekiq-scheduler', '~> 3.0', '>= 3.0.1'
+gem 'mysql2'
+gem 'thinking-sphinx'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

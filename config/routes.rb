@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   get 'welcome/index'
   root 'welcome#index'
 
+  get 'search/search'
+
   resources :attachments, only: %i[destroy]
 
   resources :questions do
