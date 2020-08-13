@@ -1,0 +1,31 @@
+h1 Search:
+div
+  | Query: 
+  = @query
+div 
+  | Search type: 
+  = @search_type
+
+h3 Results:
+- if @results.empty?
+  p Nothing :(
+- else
+  ol
+    - @results.each do |res|
+        - if res.class == Question
+          li
+            | Question: 
+            = link_to "\"#{res.title}\"", res
+        - if res.class == Answer
+            li
+              = "Answer: \"#{res.body}\" in question "
+              = link_to "\"#{res.question.title}\"", res.question
+        - if res.class == Comment
+          li 
+            = "Comment: \"#{res.text}\" in question "
+            - if res.commentable.class == Question
+              = link_to "\"#{res.commentable.title}\"", res.commentable
+            - else
+              = link_to "\"#{res.commentable.question.title}\"", res.commentable.question
+        - if res.class == User
+          li = "User: #{res.email}"

@@ -3,6 +3,7 @@ html
     title BastardOverflow
     = csrf_meta_tags
     = csp_meta_tag
+    = action_cable_meta_tag
 
     = javascript_include_tag "application"
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
@@ -11,10 +12,13 @@ html
 
   body
   
+    = link_to 'Home ', welcome_index_path
     - if current_user.nil?
       = link_to 'Sign in', new_user_session_path
     - else
       = link_to 'Exit', destroy_user_session_path, method: :delete
+
+    = render 'layouts/search_form'
 
     p class="notice"
       = notice 

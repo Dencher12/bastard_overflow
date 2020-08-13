@@ -1,0 +1,8 @@
+h1 Hello maggot
+p It's today's questions. Answer!
+
+ol
+  - @questions.each do |q|
+    li
+      = link_to "#{q.title}", q
+

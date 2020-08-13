@@ -17,7 +17,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'renders create template' do
         post :create, params: { answer: attr, question_id: question.id }, format: :js
-        expect(response).to render_template :create
+        expect(response).to render_template 'answers/_answer'
       end
     end
 
@@ -30,7 +30,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'renders create template' do
         post :create, params: { answer: attr, question_id: question.id }, format: :js
-        expect(response).to render_template :create
+        expect(response).to_not render_template 'answers/_answer'
       end
     end
   end
@@ -49,11 +49,6 @@ RSpec.describe AnswersController, type: :controller do
       patch :update, params: { id: answer.id, answer: { body: 'new body' }, question_id: question.id }, format: :js
       answer.reload
       expect(answer.body).to eq('new body')
-    end
-
-    it 'renders update template' do
-      patch :update, params: { id: answer.id, answer: attr, question_id: question.id }, format: :js
-      expect(response).to render_template :update
     end
   end
 end

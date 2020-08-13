@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_28_182348) do
+ActiveRecord::Schema.define(version: 2020_08_06_100603) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2020_01_28_182348) do
     t.bigint "question_id"
     t.bigint "user_id"
     t.boolean "mark", default: false
+    t.integer "rating", default: 0
     t.index ["question_id"], name: "index_answers_on_question_id"
     t.index ["user_id"], name: "index_answers_on_user_id"
   end
@@ -36,6 +37,23 @@ ActiveRecord::Schema.define(version: 2020_01_28_182348) do
     t.index ["attachable_type"], name: "index_attachments_on_attachable_type"
   end
 
+  create_table "authhorizations", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "provider"
+    t.string "uid"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_authhorizations_on_user_id"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.text "text"
+    t.integer "commentable_id"
+    t.string "commentable_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "questions", force: :cascade do |t|
     t.string "title"
     t.text "body"
@@ -43,6 +61,11 @@ ActiveRecord::Schema.define(version: 2020_01_28_182348) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id"
     t.index ["user_id"], name: "index_questions_on_user_id"
+  end
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "question_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -53,8 +76,14 @@ ActiveRecord::Schema.define(version: 2020_01_28_182348) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.boolean "admin", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "users_rate_answers", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "answer_id"
   end
 
 end

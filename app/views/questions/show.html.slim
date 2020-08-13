@@ -14,13 +14,24 @@ h1 Question
     - @question.attachments.each do |a|
       = render 'attachments/attachment', attachment: a
 
-  - if @question.user == current_user
+  - if can?(:edit, @question)
     p = link_to 'Edit question', '', class: 'edit-question-link' 
-    = render 'form', question: @question, js: true
+    .edit_question = render 'form', question: @question, js: true
+  - if can?(:destroy, @question)  
     p = link_to 'Delete Question', question_path(@question), method: :delete
+
+  - if can?(:subscribe, @question)
+    - if current_user.subscribed?(@question)
+      p = link_to 'Unsubscribe', unsubscribe_question_path(@question), method: :delete
+    - else  
+      P = link_to 'Subscribe', subscribe_question_path(@question), method: :patch
     
+  .comments = render @question.comments, comment: @comment  
+  = render 'comments/comment_form', question: @question, answer: nil, comment_type: 'question'  
+
+
 
 h3 Answers
-div class='answers' = render @question.answers.sorted
+div class='answers' = render @question.answers.sorted, question: @question, comment: @comment
 
 = render 'answers/answer_form'

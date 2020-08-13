@@ -68,3 +68,5 @@ yarn-debug.log*
 !/storage/.keep
 
 config/database.yml
+config/*.sphinx.conf
+db/sphinx

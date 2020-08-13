@@ -2,19 +2,39 @@
   position: relative;
 }
 .edit-answer { display: none}
-.answer-main {
-  margin-left: 45px;
-}
+
 .edit-answer-link, .delete-answer-link { margin-right: 10px}
 .mark {
   display: none;
-  margin-right: 10px;
-  position: absolute;
-  top: 0px;
+  margin-top: 20px
+}
+
+.rating-block {
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 16px;
+  width: 36px;
+}
+
+.rating {
+  text-align: center;
+}
+
+.answer-main {
+  display: inline-block;
+  margin-left: 10px;
 }
 
 .mark.visible {
   display: block;
+}
+
+.arrow {
+  width: 36px;
+}
+
+.arrow-up {
+  rotate: 180deg;
 }
 
 .answer-paragraph {max-width: 600px}

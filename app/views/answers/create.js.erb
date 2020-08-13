@@ -1,9 +1,0 @@
-<% if @answer.errors.present? %>
-  <% @answer.errors.full_messages.each do |message|%>
-    $('.answer_errors').html('<%= j message %>');
-  <% end %>
-<% else %>
-  $('.answers').append('<%= j render @answer %>');
-  $('#create_answer_field').val('');
-<% end %>
-
